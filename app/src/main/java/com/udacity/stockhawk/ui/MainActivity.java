@@ -47,10 +47,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String symbol) {
-
-        Timber.d("Symbol clicked: %s", symbol);
         Intent intent=new Intent(MainActivity.this,com.udacity.stockhawk.ui.DetailActivity.class);
         startActivity(intent);
+        Timber.d("Symbol clicked: %s", symbol);
     }
 
     @Override
