@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     void addStock(String symbol) {
-        if (symbol != null && !symbol.isEmpty()) {
+        if (symbol != null && !symbol.isEmpty() && symbol.matches("^[A-Z]+$")) {
 
             if (networkUp()) {
                 swipeRefreshLayout.setRefreshing(true);
@@ -128,7 +128,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
+        }else{
+            Toast.makeText(this,"Invalid Symbol", Toast.LENGTH_LONG).show();
+
         }
+
     }
 
     @Override
