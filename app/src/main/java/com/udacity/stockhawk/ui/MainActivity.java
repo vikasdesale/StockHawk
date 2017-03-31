@@ -24,10 +24,10 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
@@ -47,11 +47,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String symbol, String history) {
-        Intent intent=new Intent(MainActivity.this,com.udacity.stockhawk.ui.DetailActivity.class);
-        intent.putExtra("symbol",symbol);
-        intent.putExtra("history",history);
+        Bundle extras = new Bundle();
+        extras.putString(StockWidgetProvider.EXTRA_SYMBOL, symbol);
+        extras.putString(StockWidgetProvider.EXTRA_HISTORY, history);
+        Intent intent=new Intent(MainActivity.this,DetailActivity.class)
+        .putExtras(extras);
         startActivity(intent);
-        Timber.d("Symbol clicked: %s", symbol);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     void addStock(String symbol) {
-        if (symbol != null && !symbol.isEmpty() && symbol.matches("^[A-Z]+$")) {
+        if (symbol != null && !symbol.isEmpty() && symbol.matches("^[A-Z]+$") || symbol.matches("^[a-z]+$")) {
 
             if (networkUp()) {
                 swipeRefreshLayout.setRefreshing(true);
@@ -155,6 +156,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.GONE);
         }
         adapter.setCursor(data);
+
+        // Send update broadcast to update the widget
+        sendBroadcast(new Intent("android.appwidget.action.APPWIDGET_UPDATE"));
     }
 
 

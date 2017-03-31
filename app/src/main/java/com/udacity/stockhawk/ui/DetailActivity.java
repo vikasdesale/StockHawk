@@ -16,17 +16,9 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-
         Bundle extras = getIntent().getExtras();
-        if(extras!=null) {
-            history = getIntent().getExtras().getString("history");
-            symbol = getIntent().getExtras().getString("symbol");
-        }
-        Bundle arguments = new Bundle();
-        arguments.putString("history",history);
-        arguments.putString("symbol",symbol);
         DetailActivityFragment fragment = new DetailActivityFragment();
-        fragment.setArguments(arguments);
+        fragment.setArguments(extras);
         getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_detail_container, fragment)
                     .commit();

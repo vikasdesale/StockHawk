@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,8 +55,8 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
         ButterKnife.bind(this, view);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            history=arguments.getString("history");
-            symbol=arguments.getString("symbol");
+            history=arguments.getString(StockWidgetProvider.EXTRA_HISTORY);
+            symbol=arguments.getString(StockWidgetProvider.EXTRA_SYMBOL);
         }
 
         if(history==null){
