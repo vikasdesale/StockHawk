@@ -9,14 +9,10 @@ import com.udacity.stockhawk.R;
 
 public class DetailActivity extends AppCompatActivity {
 
-    String history = "";
-    String symbol = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         Bundle extras = getIntent().getExtras();
         DetailActivityFragment fragment = new DetailActivityFragment();
         fragment.setArguments(extras);

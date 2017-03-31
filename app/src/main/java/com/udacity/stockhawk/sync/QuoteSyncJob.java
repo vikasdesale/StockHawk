@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 
@@ -45,8 +46,6 @@ public final class QuoteSyncJob {
     }
 
     static void getQuotes(final Context context) {
-
-        Timber.d("Running sync job");
 
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
@@ -111,7 +110,7 @@ public final class QuoteSyncJob {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(context, "Added Stock is not exist ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, context.getString(R.string.added_stock_not_found), Toast.LENGTH_SHORT).show();
                             PrefUtils.removeStock(context, quote.getSymbol());
                         }
                     });
@@ -130,11 +129,8 @@ public final class QuoteSyncJob {
     }
 
     private static void schedulePeriodic(Context context) {
-        Timber.d("Scheduling a periodic task");
-
 
         JobInfo.Builder builder = new JobInfo.Builder(PERIODIC_ID, new ComponentName(context, QuoteJobService.class));
-
 
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPeriodic(PERIOD)
@@ -166,10 +162,8 @@ public final class QuoteSyncJob {
 
             JobInfo.Builder builder = new JobInfo.Builder(ONE_OFF_ID, new ComponentName(context, QuoteJobService.class));
 
-
             builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setBackoffCriteria(INITIAL_BACKOFF, JobInfo.BACKOFF_POLICY_EXPONENTIAL);
-
 
             JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
