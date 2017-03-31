@@ -9,12 +9,25 @@ import com.udacity.stockhawk.R;
 
 public class DetailActivity extends AppCompatActivity {
 
+    String history="";
+    String symbol="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-            DetailActivityFragment fragment = new DetailActivityFragment();
-            getSupportFragmentManager().beginTransaction()
+
+
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            history = getIntent().getExtras().getString("history");
+            symbol = getIntent().getExtras().getString("symbol");
+        }
+        Bundle arguments = new Bundle();
+        arguments.putString("history",history);
+        arguments.putString("symbol",symbol);
+        DetailActivityFragment fragment = new DetailActivityFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_detail_container, fragment)
                     .commit();
 
