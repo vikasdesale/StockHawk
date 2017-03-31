@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Bundle extras = new Bundle();
         extras.putString(StockWidgetProvider.EXTRA_SYMBOL, symbol);
         extras.putString(StockWidgetProvider.EXTRA_HISTORY, history);
-        Intent intent=new Intent(MainActivity.this,DetailActivity.class)
-        .putExtras(extras);
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class)
+                .putExtras(extras);
         startActivity(intent);
     }
 
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
-        }else{
-            Toast.makeText(this,"Invalid Symbol", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Invalid Symbol", Toast.LENGTH_LONG).show();
 
         }
 

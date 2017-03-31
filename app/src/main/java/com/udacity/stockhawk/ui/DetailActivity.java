@@ -9,8 +9,9 @@ import com.udacity.stockhawk.R;
 
 public class DetailActivity extends AppCompatActivity {
 
-    String history="";
-    String symbol="";
+    String history = "";
+    String symbol = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +21,8 @@ public class DetailActivity extends AppCompatActivity {
         DetailActivityFragment fragment = new DetailActivityFragment();
         fragment.setArguments(extras);
         getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_detail_container, fragment)
-                    .commit();
+                .add(R.id.fragment_detail_container, fragment)
+                .commit();
 
     }
 

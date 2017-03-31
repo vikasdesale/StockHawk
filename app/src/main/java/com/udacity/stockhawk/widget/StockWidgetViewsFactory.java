@@ -10,8 +10,8 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.util.Util;
 import com.udacity.stockhawk.data.Contract;
+import com.udacity.stockhawk.util.Util;
 
 import java.util.Locale;
 
@@ -21,11 +21,11 @@ import static com.udacity.stockhawk.util.Util.COLUMN_PROJECTION;
  * Created by Dell on 3/31/2017.
  */
 public class StockWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+    String symbol, price, percent, history, newPercent;
     private Cursor cursor;
     private Context context = null;
     private int appWidgetId;
-    long token;
-    String symbol,price,percent,history;
+
     public StockWidgetViewsFactory(Context context, Intent intent) {
         this.context = context;
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -42,20 +42,20 @@ public class StockWidgetViewsFactory implements RemoteViewsService.RemoteViewsFa
     }
 
     public void query() {
-        token = Binder.clearCallingIdentity();
+        final long token = Binder.clearCallingIdentity();
         cursor = context.getContentResolver().query(
                 Contract.Quote.URI,
                 COLUMN_PROJECTION,
                 null,
                 null,
-                Contract.Quote.COLUMN_SYMBOL + Contract.Quote.SORTORDER_ASCENDING );
+                Contract.Quote.COLUMN_SYMBOL + Contract.Quote.SORTORDER_ASCENDING);
         Binder.restoreCallingIdentity(token);
     }
 
     @Override
     public void onDestroy() {
         // Releases the cursor when we are done with it
-        if ( cursor != null ) {
+        if (cursor != null) {
             cursor.close();
             cursor = null;
         }
@@ -73,21 +73,21 @@ public class StockWidgetViewsFactory implements RemoteViewsService.RemoteViewsFa
         String currencySymbol = context.getResources().getString(R.string.currency_symbol);
 
         // Check we have data at this view position - If we don't then exit with null
-        if ( !cursor.moveToPosition(position) )
+        if (!cursor.moveToPosition(position))
             return null;
-         symbol  = getCursorValue(Contract.Quote.POSITION_SYMBOL);
-         price   = getCursorValue(Contract.Quote.POSITION_PRICE);
-         percent = getCursorValue(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
-         history = getCursorValue(Contract.Quote.POSITION_HISTORY);
+        symbol = getCursorValue(Contract.Quote.POSITION_SYMBOL);
+        price = getCursorValue(Contract.Quote.POSITION_PRICE);
+        percent = getCursorValue(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
+        history = getCursorValue(Contract.Quote.POSITION_HISTORY);
 
 
         RemoteViews row = new RemoteViews(context.getPackageName(), R.layout.list_item_quote);
-        String newPercent = String.format(Locale.US,"%.2f",Float.parseFloat(percent));
+        newPercent = String.format(Locale.US, "%.2f", Float.parseFloat(percent));
 
         row.setTextViewText(R.id.symbol, symbol);
         row.setTextViewText(R.id.price, currencySymbol + price);
-        row.setTextViewText(R.id.change, Util.addSignOnPrice( newPercent ));
-        Util.setBackColourPrice( row, percent );
+        row.setTextViewText(R.id.change, Util.addSignOnPrice(newPercent));
+        Util.setBackColourPrice(row, percent);
 
         Intent intent = new Intent();
         Bundle extras = new Bundle();
@@ -119,6 +119,7 @@ public class StockWidgetViewsFactory implements RemoteViewsService.RemoteViewsFa
     public boolean hasStableIds() {
         return true;
     }
+
     private String getCursorValue(int stringIndex) {
         return cursor.getString(stringIndex);
     }
