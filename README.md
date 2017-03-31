@@ -34,7 +34,4 @@ openCSV-http://opencsv.sourceforge.net/<br>
 Thanks to Yahoo Finance for providing the data.
 
 ## Android Developer Nanodegree
-[![udacity][1]][2]
-
-[1]: ../master/art/nanodegree-logo.png
-[2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
+[![Udacity](https://cloud.githubusercontent.com/assets/3719141/14508774/c7f6cbce-01d1-11e6-9daf-02bcd10b6400.jpeg)](https://www.udacity.com/course/android-developer-nanodegree--nd801)
