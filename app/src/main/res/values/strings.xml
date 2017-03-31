@@ -34,4 +34,6 @@
     <string name="content_add_stock_symbol">Add new stock symbol</string>
     <string name="Content_symbol_actionbar">Convert unit between dollar and percentage</string>
 
+    <string name="added_stock_not_found">Added Stock is not Found</string>
+    <string name="stock_symbol_is_invalid">"Invalid Stock Symbol</string>
 </resources>

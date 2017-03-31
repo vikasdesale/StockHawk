@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
         } else {
-            Toast.makeText(this, "Invalid Symbol", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,this.getString(R.string.stock_symbol_is_invalid), Toast.LENGTH_LONG).show();
 
         }
 

@@ -3,11 +3,9 @@ package com.udacity.stockhawk.ui;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -60,9 +58,6 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
             symbol = arguments.getString(StockWidgetProvider.EXTRA_SYMBOL);
         }
 
-        if (history == null) {
-
-        } else {
             entries = new ArrayList<>();
             stockDates = new ArrayList<>();
             History = history.split("\n");    // break up entries by the newline
@@ -75,9 +70,6 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
             }
 
             lineChartStock();
-        }
-        Log.d("Hello Vikas:=", "Details = Symbol:" + symbol + " " + ": " + history);
-        Toast.makeText(getActivity(), "" + symbol + "-" + history, Toast.LENGTH_SHORT);
         return view;
     }
 
@@ -106,7 +98,6 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
 
     }
 
-    // This is used to store XY-axis Settings
     private void XYAxis() {
         XAxis XAxis = lineChart.getXAxis();
         XAxis.setValueFormatter(this);
