@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,8 +34,8 @@ import butterknife.ButterKnife;
  */
 public class DetailActivityFragment extends Fragment implements IAxisValueFormatter {
 
-    String history="";
-    String symbol="";
+    String history = "";
+    String symbol = "";
     String[] History;
     List<Entry> entries;
     String[] data;
@@ -44,6 +45,7 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
     Legend legend;
     @BindView(R.id.lineChart)
     LineChart lineChart;
+
     public DetailActivityFragment() {
     }
 
@@ -54,28 +56,28 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
         ButterKnife.bind(this, view);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            history=arguments.getString("history");
-            symbol=arguments.getString("symbol");
+            history = arguments.getString(StockWidgetProvider.EXTRA_HISTORY);
+            symbol = arguments.getString(StockWidgetProvider.EXTRA_SYMBOL);
         }
 
-        if(history==null){
+        if (history == null) {
 
-        }else{
+        } else {
             entries = new ArrayList<>();
             stockDates = new ArrayList<>();
             History = history.split("\n");    // break up entries by the newline
             int timeCount = 0;
 
-            for ( String historyDataItem : History ) {
+            for (String historyDataItem : History) {
                 data = historyDataItem.split(", ");
-                entries.add(new Entry( timeCount++, Float.parseFloat(data[1])) );
+                entries.add(new Entry(timeCount++, Float.parseFloat(data[1])));
                 stockDates.add(data[0]);
             }
 
             lineChartStock();
         }
-        Log.d("Hello Vikas:=","Details = Symbol:"+symbol+" "+": "+history);
-        Toast.makeText(getActivity(),""+symbol+"-"+history,Toast.LENGTH_SHORT);
+        Log.d("Hello Vikas:=", "Details = Symbol:" + symbol + " " + ": " + history);
+        Toast.makeText(getActivity(), "" + symbol + "-" + history, Toast.LENGTH_SHORT);
         return view;
     }
 
@@ -105,24 +107,24 @@ public class DetailActivityFragment extends Fragment implements IAxisValueFormat
     }
 
     // This is used to store XY-axis Settings
-    private void XYAxis(){
+    private void XYAxis() {
         XAxis XAxis = lineChart.getXAxis();
         XAxis.setValueFormatter(this);
-        XAxis.setTextColor (Color.BLACK);
-        YAxis YAxisL = lineChart.getAxis( YAxis.AxisDependency.LEFT);
-        YAxis YAxisR = lineChart.getAxis( YAxis.AxisDependency.RIGHT);
-        YAxisL.setTextColor (Color.BLACK);
-        YAxisR.setTextColor (Color.BLACK);
+        XAxis.setTextColor(Color.BLACK);
+        YAxis YAxisL = lineChart.getAxis(YAxis.AxisDependency.LEFT);
+        YAxis YAxisR = lineChart.getAxis(YAxis.AxisDependency.RIGHT);
+        YAxisL.setTextColor(Color.BLACK);
+        YAxisR.setTextColor(Color.BLACK);
 
     }
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis((long) Float.parseFloat(stockDates.get((int)Math.floor(value))));
+        calendar.setTimeInMillis((long) Float.parseFloat(stockDates.get((int) Math.floor(value))));
         int mYear = calendar.get(Calendar.YEAR) - 2000;
         int mMonth = calendar.get(Calendar.MONTH) + 1;
         int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        return mDay+"/"+mMonth+"/"+mYear;
+        return mDay + "/" + mMonth + "/" + mYear;
     }
 }
