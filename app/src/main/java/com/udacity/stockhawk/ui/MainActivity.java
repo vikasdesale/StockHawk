@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private StockAdapter adapter;
 
     @Override
-    public void onClick(String symbol) {
+    public void onClick(String symbol, String history) {
         Intent intent=new Intent(MainActivity.this,com.udacity.stockhawk.ui.DetailActivity.class);
+        intent.putExtra("symbol",symbol);
+        intent.putExtra("history",history);
         startActivity(intent);
         Timber.d("Symbol clicked: %s", symbol);
     }
