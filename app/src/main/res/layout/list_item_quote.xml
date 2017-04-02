@@ -6,7 +6,9 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/layout_margin"
-    android:paddingRight="@dimen/layout_margin">
+    android:paddingRight="@dimen/layout_margin"
+    android:paddingStart="@dimen/layout_margin"
+    android:paddingEnd="@dimen/layout_margin">
 
     <TextView
         android:id="@+id/symbol"
@@ -38,6 +40,8 @@
             android:background="@drawable/percent_change_pill_green"
             android:paddingLeft="@dimen/margin_LRB"
             android:paddingRight="@dimen/margin_LRB"
+            android:paddingStart="@dimen/margin_LRB"
+            android:paddingEnd="@dimen/margin_LRB"
             tools:text="100%" />
     </LinearLayout>
 </LinearLayout>
